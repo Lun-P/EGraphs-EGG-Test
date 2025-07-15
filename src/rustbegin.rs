@@ -1,3 +1,5 @@
+use std::fmt;
+
 pub fn printing() {
     println!("Hello World!");
 
@@ -21,7 +23,6 @@ pub fn printing() {
 
     println!("Debugged struct: {:#?}", &ps);
 
-    use std::fmt;
     impl fmt::Display for Printstruct<'_> {
         fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
             for _ in 0..self.0 {
@@ -31,4 +32,40 @@ pub fn printing() {
         }
     }
     println!("Printed struct: {}", &ps);
+}
+
+pub fn types() {
+    let testarr: [i32; 100] = [25; 100];
+    println!("Test array: {:?}", testarr);
+
+    let arr_to_slice: &[i32] = &testarr;
+    println!("Array as slice: {:?}", arr_to_slice);
+
+    let arr_to_slice_smaller: &[i32] = &testarr[20..23];
+    println!("Now with fewer elements: {:?}", arr_to_slice_smaller);
+
+    #[derive(Debug)]
+    struct Point3D {
+        x: i32,
+        y: i32,
+        z: i32,
+    }
+
+    let p1 = Point3D { x: 4, y: 5, z: 0 };
+    let p2 = Point3D { x: 40, ..p1 }; // Use traits from p1
+    println!("{:?} and {:?}", p1, p2);
+
+    enum Points {
+        Point3D(Point3D),
+        Point2D { x: i32, y: i32 },
+        Point1D(i32),
+    }
+    type P = Points;
+
+    let a = P::Point3D(Point3D { x: 1, y: 2, z: 3 });
+    match a {
+        P::Point3D(Point3D { x, y, z }) => println!("This is a Point3D: {x}, {y}, {z}"),
+        P::Point2D { x, y } => println!("This is a Point2D: {x}, {y}"),
+        P::Point1D(x) => println!("This is a number: {x}"),
+    }
 }

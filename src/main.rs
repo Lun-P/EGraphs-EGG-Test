@@ -1,16 +1,19 @@
-/*
 use egg::{
     AstSize, EGraph, Extractor, Pattern, RecExpr, Rewrite, Runner, Searcher, SymbolLang, rewrite,
 };
-*/
 
 mod rustbegin;
 
 fn main() {
     rustbegin::printing();
+    rustbegin::types();
 
-    // EGG Library Tests
-    /*
+    //egg_tests();
+}
+
+// EGG Library Tests
+#[allow(dead_code)]
+fn egg_tests() {
     let rules: &[Rewrite<SymbolLang, ()>] = &[
         rewrite!("add-cmt"; "(+ ?x ?y)" => "(+ ?y ?x)"),
         rewrite!("mul-cmt"; "(* ?x ?y)" => "(* ?y ?x)"),
@@ -42,5 +45,4 @@ fn main() {
     let pattern: Pattern<SymbolLang> = "(+ ?x ?y)".parse().unwrap();
     let matches = pattern.search(&egraph);
     assert!(!matches.is_empty());
-    */
 }
